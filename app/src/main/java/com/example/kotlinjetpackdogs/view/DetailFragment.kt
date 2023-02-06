@@ -1,5 +1,6 @@
 package com.example.kotlinjetpackdogs.view
 
+import android.app.Application
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +12,12 @@ import androidx.navigation.fragment.findNavController
 import com.example.kotlinjetpackdogs.R
 import com.example.kotlinjetpackdogs.databinding.FragmentDetailBinding
 import com.example.kotlinjetpackdogs.model.DogBreed
+import com.example.kotlinjetpackdogs.util.getProgressDrawable
+import com.example.kotlinjetpackdogs.util.loadImage
 import com.example.kotlinjetpackdogs.viewmodel.DetailViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -20,7 +26,7 @@ class DetailFragment : Fragment() {
 
     private var _binding: FragmentDetailBinding? = null
     private lateinit var viewModel: DetailViewModel
-    private lateinit var dog: DogBreed
+    private var dogUuid: Int = 0
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -38,14 +44,11 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
-        viewModel.fetch()
-
         arguments?.let {
-            dog = DetailFragmentArgs.fromBundle(it).dogBreed
+            dogUuid = DetailFragmentArgs.fromBundle(it).uuid
         }
-
+        viewModel.fetch(dogUuid)
         observeViewModel()
     }
 
@@ -57,6 +60,7 @@ class DetailFragment : Fragment() {
                     dogLifespan.text = dog.lifeSpan
                     dogPurpose.text = dog.bredFor
                     dogTemperament.text = dog.temperament
+                    dogImage.loadImage(dog.imageUrl!!, getProgressDrawable(requireContext()))
                 }
             }
         }

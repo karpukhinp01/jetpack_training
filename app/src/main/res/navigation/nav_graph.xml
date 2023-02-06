@@ -22,7 +22,7 @@
             android:id="@+id/action_detailFragment_to_listFragment"
             app:destination="@id/listFragment" />
         <argument
-            android:name="dogBreed"
-            app:argType="com.example.kotlinjetpackdogs.model.DogBreed" />
+            android:name="uuid"
+            app:argType="integer" />
     </fragment>
 </navigation>
