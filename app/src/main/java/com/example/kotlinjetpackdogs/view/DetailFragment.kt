@@ -1,6 +1,8 @@
 package com.example.kotlinjetpackdogs.view
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +11,15 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.palette.graphics.Palette
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.kotlinjetpackdogs.R
 import com.example.kotlinjetpackdogs.databinding.FragmentDetailBinding
 import com.example.kotlinjetpackdogs.model.DogBreed
+import com.example.kotlinjetpackdogs.model.DogPalette
 import com.example.kotlinjetpackdogs.util.getProgressDrawable
 import com.example.kotlinjetpackdogs.util.loadImage
 import com.example.kotlinjetpackdogs.viewmodel.DetailViewModel
@@ -62,6 +70,9 @@ class DetailFragment : Fragment() {
                     dogTemperament.text = dog.temperament
                     dogImage.loadImage(dog.imageUrl!!, getProgressDrawable(requireContext()))
                 }
+//                it.imageUrl?.let {
+//                    setUpBackgroundColor(it)
+//                }
             }
         }
     }
@@ -69,5 +80,23 @@ class DetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setUpBackgroundColor(url: String) {
+        Glide.with(requireContext())
+            .asBitmap()
+            .load(url)
+            .into(object: CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    Palette.from(resource)
+                        .generate { palette ->
+                            val intColor = palette?.lightMutedSwatch?.rgb ?: 0
+                            val myPalette = DogPalette(intColor)
+                            binding.root.setBackgroundColor(myPalette.color)
+                        }
+                }
+                override fun onLoadCleared(placeholder: Drawable?) {
+                }
+            })
     }
 }

@@ -1,6 +1,7 @@
 package com.example.kotlinjetpackdogs.viewmodel
 
 import android.app.Application
+import android.app.NotificationManager
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.kotlinjetpackdogs.model.DogBreed
 import com.example.kotlinjetpackdogs.model.DogDatabase
 import com.example.kotlinjetpackdogs.model.DogsApiService
+import com.example.kotlinjetpackdogs.util.NotificationsHelper
 import com.example.kotlinjetpackdogs.util.SharedPreferencesHelper
 import kotlinx.coroutines.launch
 
@@ -50,6 +52,7 @@ class ListViewModel(application: Application): BaseViewModel(application) {
                dogsRetrieved(dogsService.getDogs())
                storeDogsLocally(_dogs.value!!)
                Toast.makeText(getApplication(), "Dogs retrieved from REMOTE", Toast.LENGTH_SHORT).show()
+               NotificationsHelper(getApplication()).createNotification()
            } catch (e: Throwable) {
                _loading.value = false
                _dogsLoadError.value = true
@@ -66,6 +69,7 @@ class ListViewModel(application: Application): BaseViewModel(application) {
 
     fun refreshBypassCache() {
         fetchFromRemote()
+
     }
 
 

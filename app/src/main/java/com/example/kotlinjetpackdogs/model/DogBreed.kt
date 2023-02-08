@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Entity
-@Parcelize
 data class DogBreed(
     @ColumnInfo("breed_id")
     @SerializedName("id")
@@ -37,7 +36,11 @@ data class DogBreed(
     @ColumnInfo("dog_url")
     @SerializedName("url")
     val imageUrl: String?
-): Parcelable {
+) {
     @PrimaryKey(autoGenerate = true)
     var uuid: Int = 0
+}
+
+data class DogPalette(var color: Int) {
+
 }
