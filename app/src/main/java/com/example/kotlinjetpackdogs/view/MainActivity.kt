@@ -1,5 +1,6 @@
 package com.example.kotlinjetpackdogs.view
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
@@ -48,8 +49,14 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         return when (item.itemId) {
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                val navController = findNavController(R.id.nav_host_fragment_content_main)
+                navController.navigateUp() // clear previous navigation history
+                navController.navigate(R.id.settingsFragment)
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

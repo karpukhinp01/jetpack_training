@@ -25,4 +25,8 @@
             android:name="uuid"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.kotlinjetpackdogs.view.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>
