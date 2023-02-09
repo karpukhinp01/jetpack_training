@@ -1,6 +1,6 @@
 package com.example.kotlinjetpackdogs.view
 
-import android.app.Application
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -8,26 +8,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.kotlinjetpackdogs.R
 import com.example.kotlinjetpackdogs.databinding.FragmentDetailBinding
 import com.example.kotlinjetpackdogs.model.DogBreed
 import com.example.kotlinjetpackdogs.model.DogPalette
-import com.example.kotlinjetpackdogs.model.SMSInfo
 import com.example.kotlinjetpackdogs.util.getProgressDrawable
 import com.example.kotlinjetpackdogs.util.loadImage
 import com.example.kotlinjetpackdogs.viewmodel.DetailViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -46,7 +38,7 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
@@ -59,8 +51,13 @@ class DetailFragment : Fragment() {
         binding.toolbar.inflateMenu(R.menu.menu_detail)
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_send_sms -> {
-
+                R.id.action_share -> {
+                    val intent = Intent(Intent.ACTION_SEND)
+                    intent.type = "text/plain"
+                    intent.putExtra(Intent.EXTRA_SUBJECT, "Check out the dog breed!")
+                    intent.putExtra(Intent.EXTRA_TEXT, "${currentDog!!.dogBreed} was bred for ${currentDog!!.bredFor}")
+                    intent.putExtra(Intent.EXTRA_STREAM, currentDog!!.imageUrl)
+                    startActivity(Intent.createChooser(intent, "Share with"))
                     true
                 }
                 else -> false

@@ -1,7 +1,6 @@
 package com.example.kotlinjetpackdogs.viewmodel
 
 import android.app.Application
-import android.app.NotificationManager
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

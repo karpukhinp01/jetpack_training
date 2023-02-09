@@ -1,7 +1,6 @@
 package com.example.kotlinjetpackdogs.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import com.example.kotlinjetpackdogs.databinding.FragmentListBinding
 import com.example.kotlinjetpackdogs.viewmodel.ListViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kotlinjetpackdogs.R
-import com.example.kotlinjetpackdogs.viewmodel.BaseViewModel
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -30,7 +28,7 @@ class ListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentListBinding.inflate(inflater, container, false)
         return binding.root

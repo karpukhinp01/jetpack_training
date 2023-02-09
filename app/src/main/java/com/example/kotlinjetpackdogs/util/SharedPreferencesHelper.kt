@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import androidx.core.content.edit
-import com.example.kotlinjetpackdogs.R
 
 class SharedPreferencesHelper {
     companion object {

@@ -3,12 +3,9 @@ package com.example.kotlinjetpackdogs.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kotlinjetpackdogs.model.DogBreed
-import com.example.kotlinjetpackdogs.model.DogDao
 import com.example.kotlinjetpackdogs.model.DogDatabase
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class DetailViewModel(application: Application): BaseViewModel(application) {
