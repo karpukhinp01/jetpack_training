@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,7 @@ import com.example.kotlinjetpackdogs.R
 import com.example.kotlinjetpackdogs.databinding.FragmentDetailBinding
 import com.example.kotlinjetpackdogs.model.DogBreed
 import com.example.kotlinjetpackdogs.model.DogPalette
+import com.example.kotlinjetpackdogs.model.SMSInfo
 import com.example.kotlinjetpackdogs.util.getProgressDrawable
 import com.example.kotlinjetpackdogs.util.loadImage
 import com.example.kotlinjetpackdogs.viewmodel.DetailViewModel
@@ -35,6 +37,7 @@ class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private lateinit var viewModel: DetailViewModel
     private var dogUuid: Int = 0
+    private var currentDog: DogBreed ? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -53,6 +56,16 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
+        binding.toolbar.inflateMenu(R.menu.menu_detail)
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_send_sms -> {
+
+                    true
+                }
+                else -> false
+            }
+        }
         arguments?.let {
             dogUuid = DetailFragmentArgs.fromBundle(it).uuid
         }
@@ -63,6 +76,7 @@ class DetailFragment : Fragment() {
     private fun observeViewModel() {
         viewModel.dog.observe(viewLifecycleOwner) { dog ->
             dog?.let {
+                currentDog = it
                 binding.apply {
                     dogName.text = dog.dogBreed
                     dogLifespan.text = dog.lifeSpan
@@ -99,4 +113,5 @@ class DetailFragment : Fragment() {
                 }
             })
     }
+
 }

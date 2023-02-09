@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.kotlinjetpackdogs.databinding.FragmentListBinding
 import com.example.kotlinjetpackdogs.viewmodel.ListViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kotlinjetpackdogs.R
 import com.example.kotlinjetpackdogs.viewmodel.BaseViewModel
 
 /**
@@ -37,6 +39,17 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.inflateMenu(R.menu.menu_main)
+        binding.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_settings -> {
+                    findNavController().navigate(R.id.action_listFragment_to_settingsFragment)
+                    true
+                }
+                else -> false
+            }
+        }
 
         binding.refreshLayout.setOnRefreshListener {
             binding.dogsList.visibility = View.GONE

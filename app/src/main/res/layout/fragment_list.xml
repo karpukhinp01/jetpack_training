@@ -7,41 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".view.ListFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="The Dogs"
+            android:layout_alignParentTop="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/dogs_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"/>
 
         <TextView
             android:id="@+id/list_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             style="@style/title"
             android:text="@string/an_error_occured_while_loading_dog_info"
-            />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
 
         <ProgressBar
             android:id="@+id/loading_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
